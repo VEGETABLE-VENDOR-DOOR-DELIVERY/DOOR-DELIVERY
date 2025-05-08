@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Product Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+    .product-card h2 {
+      font-size: 1.2em;
+      color: #333;
+      margin: 0 0 10px;
+    }
+    .product-card p {
+      font-size: 1em;
+      color: #666;
+      margin: 0 0 10px;
+    }
+    .input-field {
+      width: 80%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .save-btn {
+      padding: 8px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .save-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard - Product Management</h1>
+  <div class="container" id="productArea"></div>
+
+  <script>
+    const defaultProducts = [
+      { name: "Potato", price: 35, image: "potato.jpg", available: true },
+      { name: "Tomato", price: 30, image: "tomato.jpg", available: true },
+      { name: "Carrot", price: 50, image: "carrot.jpg", available: true },
+      { name: "Garlic", price: 100, image: "garlic.jpg", available: true },
+      { name: "Onion", price: 45, image: "onion.jpg", available: true },
+      { name: "Cabbage", price: 40, image: "Cabbage.jpg", available: true },
+      { name: "Cucumber", price: 25, image: "cucumber.png", available: true },
+      { name: "Chilies", price: 60, image: "chillies.jpg", available: true },
+      { name: "Spinach", price: 20, image: "Spinach.jpg", available: true },
+      { name: "Cauliflower", price: 40, image: "cauliflower.jpg", available: true },
+      { name: "Brinjal", price: 30, image: "brinjal.jpg", available: true },
+      { name: "Mushrooms", price: 80, image: "mushrooms.jpg", available: true },
+      { name: "Radish", price: 25, image: "Radish.jpg", available: true },
+    ];
+
+    const products = JSON.parse(localStorage.getItem("products")) || defaultProducts;
+    const productArea = document.getElementById("productArea");
+
+    products.forEach((product, index) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p>Price: ₹<input type="number" class="input-field" id="price-${index}" value="${product.price}"></p>
+        <button class="save-btn" onclick="saveProduct(${index})">Save Changes</button>
+      `;
+      productArea.appendChild(card);
+    });
+
+    function saveProduct(index) {
+      const priceInput = document.getElementById(`price-${index}`);
+      const newPrice = parseFloat(priceInput.value);
+      if (isNaN(newPrice) || newPrice <= 0) {
+        alert("Please enter a valid price.");
+        return;
+      }
+      products[index].price = newPrice;
+      localStorage.setItem('products', JSON.stringify(products));
+      alert(`${products[index].name} price updated to ₹${newPrice}`);
+    }
+  </script>
+</body>
+</html>

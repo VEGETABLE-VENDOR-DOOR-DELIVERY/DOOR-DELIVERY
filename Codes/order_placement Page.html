@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('login-backround.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .amount-summary {
+      background: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body onload="loadCart()">
+<div class="form-container">
+  <h2>Order Summary</h2>
+  <div id="amount-details" class="amount-summary"></div>
+
+  <h2>Delivery Details</h2>
+  <input type="text" id="name" placeholder="Name">
+  <input type="tel" id="phone" placeholder="Phone Number">
+  <input type="email" id="email" placeholder="Email">
+  <input type="text" id="address" placeholder="Address">
+  <input type="number" id="distance" placeholder="Distance (km)">
+  <button onclick="submitOrder()">Confirm Order</button>
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+  function loadCart() {
+    const params = new URLSearchParams(window.location.search);
+    const summary = document.getElementById('amount-details');
+    if (params.has('cart')) {
+      try {
+        const cart = JSON.parse(decodeURIComponent(params.get('cart')));
+        let total = 0;
+        cart.forEach(item => {
+          const subtotal = item.price * item.quantity;
+          total += subtotal;
+          const row = document.createElement("div");
+          row.textContent = `${item.name} - ₹${item.price} × ${item.quantity} = ₹${subtotal}`;
+          summary.appendChild(row);
+        });
+        const totalRow = document.createElement("div");
+        totalRow.style.marginTop = "10px";
+        totalRow.style.fontWeight = "bold";
+        totalRow.textContent = `Total Amount: ₹${total}`;
+        summary.appendChild(totalRow);
+      } catch (e) {
+        summary.textContent = "Failed to load cart data.";
+      }
+    } else {
+      summary.textContent = "Cart is empty.";
+    }
+  }
+
+  function submitOrder() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const distance = parseFloat(document.getElementById('distance').value);
+    const message = document.getElementById('message');
+
+    if (!name || !phone || !email || !address || isNaN(distance)) {
+      message.textContent = "Please fill all fields correctly.";
+      message.className = "message error";
+      return;
+    }
+
+    if (distance > 7) {
+      message.textContent = "Invalid input: Distance exceeds 7 km.";
+      message.className = "message error";
+      return;
+    }
+
+    message.textContent = "Order has been placed successfully.";
+    message.className = "message success";
+  }
+</script>
+</body>
+</html>

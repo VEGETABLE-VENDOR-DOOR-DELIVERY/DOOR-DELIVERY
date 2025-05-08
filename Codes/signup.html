@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Vegetable Delivery</title>
+    <link rel="stylesheet" href="sign up.css">
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create an Account</h2>
+        <form method="POST" action="/cgi-bin/signup.cgi">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="role" placeholder="Role (customer/vendor)" required>
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            <button type="submit">Sign Up</button>
+            <div class="options">
+                <a href="loginpage.html">Already have an account? Log in</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

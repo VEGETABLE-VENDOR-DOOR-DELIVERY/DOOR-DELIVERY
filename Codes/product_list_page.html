@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Listing Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("login-backround.jpg");
+      background-size: cover;
+      background-repeat: repeat;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+    .product-card h2 {
+      font-size: 1.2em;
+      color: #333;
+      margin: 0 0 10px;
+    }
+    .product-card p {
+      font-size: 1em;
+      color: #666;
+      margin: 0 0 10px;
+    }
+    .quantity-label {
+      font-size: 0.85em;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    .quantity-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 5px;
+    }
+    .qty-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      font-size: 1em;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .qty-input {
+      width: 40px;
+      text-align: center;
+      font-size: 1em;
+    }
+    .add-btn {
+      background: #28a745;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .order-now-btn {
+      background: #ff6600;
+      color: white;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 30px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>ANTHONY'S VEGETABLES!!</h1>
+  <div class="container" id="productArea"></div>
+
+  <div style="text-align: center;">
+    <button class="order-now-btn" id="orderNowBtn">Order Now</button>
+  </div>
+
+  <script>
+    const defaultProducts = [
+      { name: "Potato", price: 35, image: "potato.jpg" },
+      { name: "Tomato", price: 30, image: "tomato.jpg" },
+      { name: "Carrot", price: 50, image: "carrot.jpg" },
+      { name: "Garlic", price: 100, image: "garlic.jpg" },
+      { name: "Onion", price: 45, image: "onion.jpg" },
+      { name: "Cabbage", price: 40, image: "Cabbage.jpg" },
+      { name: "Cucumber", price: 25, image: "cucumber.png" },
+      { name: "Chilies", price: 60, image: "chillies.jpg" },
+      { name: "Spinach", price: 20, image: "Spinach.jpg" },
+      { name: "Cauliflower", price: 40, image: "cauliflower.jpg" },
+      { name: "Brinjal", price: 30, image: "brinjal.jpg" },
+      { name: "Mushrooms", price: 80, image: "mushrooms.jpg" },
+      { name: "Radish", price: 25, image: "Radish.jpg" }
+    ];
+
+    const products = JSON.parse(localStorage.getItem("products")) || defaultProducts;
+    const cart = [];
+    const productArea = document.getElementById("productArea");
+
+    products.forEach((product, index) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p>Price: ₹${product.price} per kg</p>
+        <div class="quantity-label">No. of kilos:</div>
+        <div class="quantity-control">
+          <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+          <input type="text" id="qty-${index}" class="qty-input" value="1" readonly>
+          <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+        </div>
+        <button class="add-btn" onclick="addToCart('${product.name}', ${index})"><i class="fas fa-plus"></i> Add to Cart</button>
+      `;
+      productArea.appendChild(card);
+    });
+
+    function changeQty(index, delta) {
+      const input = document.getElementById(`qty-${index}`);
+      let value = parseInt(input.value) + delta;
+      if (value < 1) value = 1;
+      input.value = value;
+    }
+
+    function addToCart(name, index) {
+      const qty = parseInt(document.getElementById(`qty-${index}`).value);
+      const product = products[index];
+      const existing = cart.find(p => p.name === name);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.push({ name: product.name, price: product.price, quantity: qty });
+      }
+      alert(`${product.name} added to cart`);
+    }
+
+    document.getElementById("orderNowBtn").addEventListener("click", function () {
+      if (cart.length === 0) {
+        alert("Please add items to cart before ordering.");
+        return;
+      }
+      const cartData = encodeURIComponent(JSON.stringify(cart));
+      window.location.href = `order_placement Page.html?cart=${cartData}`;
+    });
+  </script>
+</body>
+</html>

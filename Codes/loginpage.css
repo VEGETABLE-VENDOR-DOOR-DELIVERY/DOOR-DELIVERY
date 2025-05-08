@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url("login-backround.jpg") no-repeat center center fixed; 
+    background-size: cover; 
+    opacity: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.options {
+    margin-top: 15px;
+}
+
+.options a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.options a:hover {
+    text-decoration: underline;
+}
