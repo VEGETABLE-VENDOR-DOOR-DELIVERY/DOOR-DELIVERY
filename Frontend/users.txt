@@ -1,0 +1,18 @@
+1,vishnu,qwertyu@gmail.com,1234567890,customer,1234567890
+2,Vimal,vimal@gmail.com,vimal@123,customer,123456789
+
+
+17,Vinobalan ,vino@gmail.com,vino@123,customer,1234567890
+17,Ajay,ajay@gmail.com,ajay123,customer,1234567890
+7,Vimal Raj,vimalraj@gmail.com,vimal123,customer,1234567890
+8,Vimal Raj,vimalraj@gmail.com,vimal123,customer,1234567890
+9,Vimal Raj,vimalraj@gmail.com,vimal123,customer,1234567890
+10,Vimal Raj,vimalraj@gmail.com,vimal123,customer,1234567890
+11,Vimal Raj,vimalraj@gmail.com,vimal123,customer,1234567890
+12,Vimal Raj,vimalraj@gmail.com,vimal123,customer,1234567890
+13,anthony,anthony@gmail.com,anthony123,vendor,789458452
+14,bala,bala@gmail.com,bala123,customer,987654321
+15,vishnu1,new@gmail.com,12345,customer,12345678
+16,Vishnu ,vish@gmail.com,vishnu123,customer,987654321
+17,raj,raj@gmail.com,raj@123,vendor,9500703503
+18,hell,ger2@gmail.com,123*,customer,3939393

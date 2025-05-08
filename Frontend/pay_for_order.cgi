@@ -1,0 +1,1 @@
+Dummy CGI Binary for pay_for_order.cgi

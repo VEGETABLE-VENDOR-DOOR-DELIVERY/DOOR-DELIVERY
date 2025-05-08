@@ -1,0 +1,3 @@
+http://localhost/signup.html
+http://localhost/cgi-bin/checkout.cgi
+http://localhost/product_list_page.html

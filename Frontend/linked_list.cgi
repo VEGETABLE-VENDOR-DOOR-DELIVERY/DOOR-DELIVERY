@@ -1,0 +1,1 @@
+Dummy CGI Binary for linked_list.cgi
